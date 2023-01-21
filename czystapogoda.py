@@ -41,14 +41,14 @@ def onepath(path, download=False):
     try:
         fp = open(path, 'rb')
     except FileNotFoundError:
-        if download:
-            fp = open(path, 'w+b')
-            req = urlopen(
-                'http://danepubliczne.imgw.pl/data/dane_pomiarowo_obserwacyjne/'
-                f'dane_meteorologiczne/dobowe/{category}/'
-                f'{year}/{year}_{month:02}_{category[0]}.zip'
-            )
-            copyfileobj(req, fp)
+        if not download:  raise
+        fp = open(path, 'w+b')
+        req = urlopen(
+            'http://danepubliczne.imgw.pl/data/dane_pomiarowo_obserwacyjne/'
+            f'dane_meteorologiczne/dobowe/{category}/'
+            f'{year}/{year}_{month:02}_{category[0]}.zip'
+        )
+        copyfileobj(req, fp)
 
     with fp:
         z = ZipFile(fp)
