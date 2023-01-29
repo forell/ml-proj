@@ -14,11 +14,9 @@ train_station_types = ['station', 'halt', 'service_station']
 def get_all_names(o):
     names = []
 
-    if (name := o.tags.get('name')) is not None:
-        names.append(name)
-
-    if (alt_names := o.tags.get('alt_name')) is not None:
-        names.extend(alt_names.split(';'))
+    for tag, value in o.tags:
+        if tag.startswith('name') or tag == 'alt_name':
+            names.extend(value.split(';'))
 
     return names
 
