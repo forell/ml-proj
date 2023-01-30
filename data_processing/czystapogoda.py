@@ -28,14 +28,14 @@ def parse_coord(dat):
 
 def onepath(path, download=False):
     fn = os.path.basename(path)
-    m = re.match(r'^(\d{4})_([01]\d)_([sok])\.zip$', fn)
+    m = re.match(r'^(\d{4})_(\d*)_([sok])\.zip$', fn)
     if not m:
-        print("unable to infer year and month from filename; "
+        print("unable to infer year from filename; "
               "use format 2022_07_s.zip", repr(fn))
         sys.exit(1)
 
     year = int(m.group(1))
-    month = int(m.group(2))
+    group = int(m.group(2))
     category = ('synop', 'opad', 'klimat')['sok'.index(m.group(3))]
 
     try:
@@ -46,13 +46,13 @@ def onepath(path, download=False):
         req = urlopen(
             'http://danepubliczne.imgw.pl/data/dane_pomiarowo_obserwacyjne/'
             f'dane_meteorologiczne/dobowe/{category}/'
-            f'{year}/{year}_{month:02}_{category[0]}.zip'
+            f'{year}/{year}_{group}_{category[0]}.zip'
         )
         copyfileobj(req, fp)
 
     with fp:
         z = ZipFile(fp)
-        uncompressed = z.open(f'{category[0]}_d_{month:02}_{year}.csv')
+        uncompressed = z.open(f'{category[0]}_d_{group}_{year}.csv')
 
         assert category == 'synop'
         onezip(uncompressed)
