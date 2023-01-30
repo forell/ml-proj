@@ -35,7 +35,7 @@ def onepath(path, download=False):
         sys.exit(1)
 
     year = int(m.group(1))
-    group = int(m.group(2))
+    group = m.group(2)
     category = ('synop', 'opad', 'klimat')['sok'.index(m.group(3))]
 
     try:
