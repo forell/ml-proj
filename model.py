@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-import json
 import csv
-import pandas as pd
+import json
+import geopy.distance as geo
 import numpy as np
+import pandas as pd
 
 """The columns used as input for the prediction."""
 weather_labels = ['TMAX', 'TMIN', 'STD', 'TMNG', 'SMDB', 'opad', 'PKSN',
@@ -10,6 +11,7 @@ weather_labels = ['TMAX', 'TMIN', 'STD', 'TMNG', 'SMDB', 'opad', 'PKSN',
                   'ZMGL', 'SADZ', 'GOLO', 'ZMNI', 'ZMWS', 'ZMET', 'FF10',
                   'FF15', 'BRZA', 'ROSA', 'SZRO', 'DZPS', 'DZBL', 'grun',
                   'IZD', 'IZG', 'AKTN']
+
 
 def load_data(weather_path, delay_path):
     weather = {}
@@ -27,8 +29,20 @@ def load_data(weather_path, delay_path):
 
 
 def weather_at(weather, date, lat, lon):
-    # TODO:
-    return { k : v for k, v in weather[date][0].items() if k not in ['lat', 'lon'] }
+    res = { l : 0 for l in weather_labels }
+    weight_sum = 0
+
+    for w in weather[date]:
+        d = geo.distance((w['lat'], w['lon']), (lat, lon)).km
+        weight = np.exp(-d)
+        weight_sum += weight
+        for l in weather_labels:
+            res[l] += weight * w[l]
+
+    for l in weather_labels:
+        res[l] /= weight_sum
+
+    return res
 
 
 def combine_data(weather, delays):
