@@ -92,29 +92,29 @@ def weather_at(weather, date, coeffs_info):
 
 
 def combine_data(weather, weather_coords, delays):
-    X_weather = []
-    Y_delays = []
+    X_weather = np.empty((len(delays), num_of_weather_attr))
+    Y_delays = np.empty((len(delays), 1))
     
     # dict of dicts: (point -> (date -> weather)) 
     weather_middlepoints = dict()
     # point -> (table of coefficients e^(-d), sum of this table)
     coeffs = dict()
     
-    for d in delays:
+    for i, d in enumerate(delays):
         lat, lon, date, delay = d
         if (lat, lon) not in weather_middlepoints:
             weather_middlepoints[(lat, lon)] = dict()
             coeffs[(lat, lon)] = calculate_coefficients(weather_coords, lat, lon)
         if date not in weather_middlepoints[(lat, lon)]:
             weather_middlepoints[(lat, lon)][date] = weather_at(weather, date, coeffs[(lat, lon)])
-        X_weather.append(weather_middlepoints[(lat, lon)][date])
-        Y_delays.append(delay)
+        X_weather[i] = weather_middlepoints[(lat, lon)][date]
+        Y_delays[i] = delay
 
-    return np.array(X_weather), np.array(Y_delays)[np.newaxis]
+    return X_weather, Y_delays
 
 
 def main():
-    weather, weather_coords, delays = load_data('data/weather_readings.json', 'data/minidelays.csv')
+    weather, weather_coords, delays = load_data('data/weather_readings.json', 'data/delays.csv')
     X, y = combine_data(weather, weather_coords, delays)
 
 
