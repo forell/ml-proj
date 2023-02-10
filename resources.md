@@ -28,3 +28,5 @@ Tools
 - [Osmium](https://osmcode.org/osmium-tool) can be used to extract relevant
   data from OSM. There's also a [C++ library](https://osmcode.org/libosmium)
   and [Python bindings](https://osmcode.org/pyosmium).
+- [scikit-learn](https://scikit-learn.org/stable/).
+- [XGBoost](https://xgboost.readthedocs.io/en/stable/).
