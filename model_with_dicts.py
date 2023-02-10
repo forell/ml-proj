@@ -92,8 +92,8 @@ def weather_at(weather, date, coeffs_info):
 
 
 def combine_data(weather, weather_coords, delays):
-    X_weather = np.empty((0, num_of_weather_attr))
-    Y_delays = np.empty((0, 1))
+    X_weather = []
+    Y_delays = []
     
     # dict of dicts: (point -> (date -> weather)) 
     weather_middlepoints = dict()
@@ -107,11 +107,10 @@ def combine_data(weather, weather_coords, delays):
             coeffs[(lat, lon)] = calculate_coefficients(weather_coords, lat, lon)
         if date not in weather_middlepoints[(lat, lon)]:
             weather_middlepoints[(lat, lon)][date] = weather_at(weather, date, coeffs[(lat, lon)])
-        row = weather_middlepoints[(lat, lon)][date].reshape(1, -1)
-        X_weather = np.concatenate((X_weather, row))
-        Y_delays = np.concatenate((Y_delays, np.array([[delay]])))
+        X_weather.append(weather_middlepoints[(lat, lon)][date])
+        Y_delays.append(delay)
 
-    return X_weather, Y_delays
+    return np.array(X_weather), np.array(Y_delays)[np.newaxis]
 
 
 def main():
