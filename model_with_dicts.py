@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
+import argparse
 import csv
-import json
 import geopy.distance as geo
+import json
 import numpy as np
 import pandas as pd
 
@@ -114,8 +115,22 @@ def combine_data(weather, weather_coords, delays):
 
 
 def main():
-    weather, weather_coords, delays = load_data('data/weather_readings.json', 'data/delays.csv')
+    argpar = argparse.ArgumentParser()
+    argpar.add_argument('-x', required=True,
+                        help='output the X matrix to this file')
+    argpar.add_argument('-y', required=True,
+                        help='output the y vector to this file')
+    argpar.add_argument('-w', '--weather', default='data/weather_readings.json')
+    argpar.add_argument('-d', '--delays', default='data/delays.csv')
+
+    args = argpar.parse_args()
+
+    weather, weather_coords, delays = load_data(args.weather, args.delays)
     X, y = combine_data(weather, weather_coords, delays)
+    # Or alternatively use something like numpy's `save` for a binary format
+    # without going through pandas.
+    pd.DataFrame(X, columns=weather_labels).to_csv(args.x, index=False)
+    pd.DataFrame(y, columns=['delay']).to_csv(args.y, index=False)
 
 
 if __name__ == '__main__':
