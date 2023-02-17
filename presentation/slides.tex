@@ -162,13 +162,23 @@
 \begin{frame}{Results}
   \frametitle{Failed attempts}
 
-  Initial naïve linear regression resulted in MSE of 20 000 minutes (13 days)...
+  We decided to use year 2022.
+  Experiments on a smaller data subset resulted in MSE of 20 000 minutes (13 days)...
 
   Training only on positive delays gave even worse results.
 \end{frame}
 
 \begin{frame}{Results}
-  Using XGBoost regression, we got MSE of \~~6.5 minutes (\~~20 minutes on actual delays).
+  Using naïve linear regression, XGBoost and others,
+  we consistently got MSE of \~~6.5 minutes (\~~20 minutes on nonzero delays).
+
+  Regardless of regression used, the most influencial variables are:
+  \begin{itemize}
+  \item Hail duration in hours,
+  \item Low temperature,
+  \item Boolean presence of snow cover,
+  \item Boolean presence of lightnings.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{What have we learned?}
