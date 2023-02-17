@@ -6,7 +6,7 @@ import itertools as it
 from datetime import datetime
 from math import pi, sqrt, cos, sin, atan2
 
-RAILWAY_STATIONS_FILENAME = "railway_stations.csv"
+RAILWAY_STATIONS_FILENAME = "data/railway_stations.csv"
 
 def create_stations_dict():
     with open(RAILWAY_STATIONS_FILENAME, 'r', newline='') as f:

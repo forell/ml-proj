@@ -150,11 +150,25 @@
 \end{frame}
 
 \begin{frame}{Prediction}
-  \TODO{some problems (skewed data and whatever)}
+  \frametitle{Problems}
+
+  Skewed data: most trains are not delayed apparently (67\%).\\
+  The rest is mostly delayed by $\pm1$ minute.
+
+  \centering
+  \includegraphics<1>[height=.7\textheight]{dist.pdf}%
 \end{frame}
 
 \begin{frame}{Results}
-  \TODO{results, which tools we used and to what effect}
+  \frametitle{Failed attempts}
+
+  Initial naïve linear regression resulted in MSE of 20 000 minutes (13 days)...
+
+  Training only on positive delays gave even worse results.
+\end{frame}
+
+\begin{frame}{Results}
+  Using XGBoost regression, we got MSE of \~~6.5 minutes (\~~20 minutes on actual delays).
 \end{frame}
 
 \begin{frame}{What have we learned?}
