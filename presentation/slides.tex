@@ -113,8 +113,10 @@
 \end{frame}
 
 \begin{frame}{The Data}
-  \TODO{weather readings for a few discrete points, but actually we need them
-  for arbitrary points}
+  \centering
+  \includegraphics<1>[height=.8\textheight]{weather.pdf}%
+  \includegraphics<2>[height=.8\textheight]{railway.pdf}%
+  \includegraphics<3>[height=.8\textheight]{weather_railway.pdf}
 \end{frame}
 
 \begin{frame}{The Data}
@@ -122,10 +124,8 @@
   \begin{equation*}
     \operatorname{weather}(P) =
     \frac{
-      % \displaystyle
       \sum\nolimits_{m \in \textbf{Meteo}} \operatorname{w}_P(m) \cdot m[\operatorname{features}]
     }{
-      % \displaystyle
       \sum\nolimits_{m \in \textbf{Meteo}}\operatorname{w}_P(m)
     }
   \end{equation*}
