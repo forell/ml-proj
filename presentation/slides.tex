@@ -163,16 +163,16 @@
   \frametitle{Failed attempts}
 
   We decided to use year 2022.
-  Experiments on a smaller data subset resulted in MSE of 20 000 minutes (13 days)...
+  Experiments on a smaller data subset resulted in MSE of 20 000 minutes (13 days)\dots
 
   Training only on positive delays gave even worse results.
 \end{frame}
 
 \begin{frame}{Results}
   Using naïve linear regression, XGBoost and others,
-  we consistently got MSE of \~~6.5 minutes (\~~20 minutes on nonzero delays).
+  we consistently got MSE of \textasciitilde 6.5 minutes (\textasciitilde 20 minutes on non-zero delays).
 
-  Regardless of regression used, the most influencial variables are:
+  Regardless of regression used, some of the most influential variables are:
   \begin{itemize}
   \item Hail duration in hours,
   \item Low temperature,
