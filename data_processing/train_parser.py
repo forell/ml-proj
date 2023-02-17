@@ -72,13 +72,14 @@ def train_file_to_csv(filename, writer, stations_dict):
 
 if __name__ == "__main__":
     stations_dict = create_stations_dict()
-    with open('delays.csv', 'w', newline='') as res_f:
+
+    if len(sys.argv) < 3:
+        print(f'usage: {sys.argv[0]} ipa_dir output_file', file=sys.stderr)
+        sys.exit(1)
+
+    with open(sys.argv[2], 'w', newline='') as res_f:
         writer = csv.writer(res_f, delimiter=',')
         parent_dir_name = sys.argv[1]
         dir_name = parent_dir_name + "/api/train"
         for filename in os.listdir(dir_name):
             train_file_to_csv(dir_name + "/" + filename, writer, stations_dict) 
-    
-               
-
-

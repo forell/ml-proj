@@ -120,7 +120,7 @@ def main():
                         help='output the X matrix to this file')
     argpar.add_argument('-y', required=True,
                         help='output the y vector to this file')
-    argpar.add_argument('-w', '--weather', default='data/weather_readings.json')
+    argpar.add_argument('-w', '--weather', default='data/weather_readings.jsonl')
     argpar.add_argument('-d', '--delays', default='data/delays.csv')
 
     args = argpar.parse_args()
